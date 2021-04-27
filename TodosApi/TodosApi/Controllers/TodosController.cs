@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodosApi.Domain;
+using TodosApi.Hubs;
 
 namespace TodosApi.Controllers
 {
@@ -12,10 +14,12 @@ namespace TodosApi.Controllers
     public class TodosController : ControllerBase
     {
         private readonly TodosDataContext _context;
+        private readonly IHubContext<TodoHub> _hub;
 
-        public TodosController(TodosDataContext context)
+        public TodosController(TodosDataContext context, IHubContext<TodoHub> hub)
         {
             _context = context;
+            _hub = hub;
         }
 
         [HttpGet("")]
@@ -31,6 +35,7 @@ namespace TodosApi.Controllers
             var todo = new Todo { Description = request.Description, Completed = request.Completed };
             _context.Todos.Add(todo);
             await _context.SaveChangesAsync();
+            await _hub.Clients.All.SendAsync("todoAdded", todo);
             return Ok(todo);
         }
 
@@ -43,6 +48,7 @@ namespace TodosApi.Controllers
                 _context.Todos.Remove(todo);
                 await _context.SaveChangesAsync();
             }
+            await _hub.Clients.All.SendAsync("todoDelete", id);
             return NoContent();
         }
 
@@ -57,6 +63,7 @@ namespace TodosApi.Controllers
             {
                 todo.Completed = true;
                 await _context.SaveChangesAsync();
+                await _hub.Clients.All.SendAsync("todoCompleted", todo);
                 return NoContent();
             }
         }
@@ -72,6 +79,7 @@ namespace TodosApi.Controllers
             {
                 todo.Completed = false;
                 await _context.SaveChangesAsync();
+                await _hub.Clients.All.SendAsync("todoIncomplete", todo);
                 return NoContent();
             }
         }

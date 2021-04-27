@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { TodosDataService } from './services/todos-data.service';
 import { TodoEffects } from './effects/todos.effects';
+import { SocketHubEffect } from './effects/socket.effect';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,7 @@ import { TodoEffects } from './effects/todos.effects';
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([TodoEffects]),
+    EffectsModule.forRoot([TodoEffects, SocketHubEffect]),
     StoreDevtoolsModule.instrument(),
     ReactiveFormsModule
   ],

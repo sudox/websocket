@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://localhost:44345/'
+  apiUrl: 'https://localhost:44345/',
+  wsUrl: 'https://localhost:44345/todohub'
 };
 
 /*

@@ -1,6 +1,20 @@
 import { createAction, props } from "@ngrx/store";
 import { TodoEntity } from "../reducers/todos.reducer";
 
+export const wsTodoAdded = createAction(
+  '[todos] web socket todo added',
+  props<{ payload: TodoEntity }>()
+);
+
+export const wsTodoIncomplete = createAction(
+  '[todos] web socket todo incomplete',
+  props<{ payload: TodoEntity }>()
+);
+
+export const wsTodoComplete = createAction(
+  '[todos] web socket todo complete',
+  props<{ payload: TodoEntity }>()
+);
 
 export const loadTodos = createAction(
   '[todos] loadTodos'

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodosApi.Domain;
+using TodosApi.Hubs;
 
 namespace TodosApi
 {
@@ -51,6 +52,7 @@ namespace TodosApi
 
                 });
             });
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +74,7 @@ namespace TodosApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<TodoHub>("/todohub");
             });
         }
     }
