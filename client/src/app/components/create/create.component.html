@@ -1,0 +1,16 @@
+<form [formGroup]="form"
+      (ngSubmit)="submit()">
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text"
+           name="description"
+           formControlName="description"
+           class="form-control">
+    <div class="alert alert-danger"
+         *ngIf="description.errors && (description.touched || description.dirty)">
+      A Description Is Required
+    </div>
+  </div>
+  <button type="submit"
+          class="btn btn-primary">Add</button>
+</form>

@@ -1,0 +1,18 @@
+<ul class="list-unstyled">
+  <li class="alert alert-info"
+      *ngFor="let todo of items$ | async">
+
+    <span *ngIf="!todo.id.startsWith('TEMP')">
+      <button *ngIf="todo.completed"
+              (click)="todoIncomplete(todo)"
+              class="btn bi-check-circle"></button>
+      <button *ngIf="!todo.completed"
+              (click)="todoCompleted(todo)"
+              class="btn bi-circle"></button>
+    </span>
+    <span *ngIf="todo.id.startsWith('TEMP')">
+      <em>saving... </em>
+    </span>
+    <span>{{todo.description}}</span>
+  </li>
+</ul>
